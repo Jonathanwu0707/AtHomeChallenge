@@ -63,8 +63,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     new JoystickButton(m_XboxController, 5)  .whenHeld    (new RunCommand(()->m_tower.aimming(),m_tower))
-                                             .whenHeld    (new RunCommand(()->m_Limelight.board()))
-                                             .whenReleased(new InstantCommand(()->m_tower.towerStop(),m_tower));
+                                             .whenHeld    (new RunCommand(()->m_Racker.PortDistance(),m_Racker))
+                                             .whenReleased(new InstantCommand(()->m_tower.towerStop(),m_tower))
+                                             .whenReleased(new InstantCommand(()->m_Racker.rackerstop(),m_Racker));
     new JoystickButton(m_XboxController, 1)  .whenHeld    (new InstantCommand(()->m_tower.towerForward(),m_tower))
                                              .whenReleased(new InstantCommand(()->m_tower.towerStop(), m_tower));
     new JoystickButton(m_XboxController, 2)  .whenHeld    (new InstantCommand(()->m_tower.towerReverse(), m_tower))
@@ -73,13 +74,13 @@ public class RobotContainer {
                                              .whenReleased(new InstantCommand(()->m_Racker.rackerstop(), m_Racker));
     new JoystickButton(m_XboxController, 4)  .whenHeld    (new InstantCommand(()->m_Racker.rackerReverse(), m_Racker))
                                              .whenReleased(new InstantCommand(()->m_Racker.rackerstop(), m_Racker));
-    new JoystickButton(m_XboxController, 6)  .whenHeld    (new InstantCommand(()->m_Flywheel.flywheelforward()))
-                                             .whenReleased(new InstantCommand(()->m_Flywheel.flywheelstop()));
-    new JoystickButton(m_XboxController, 7)  .whenHeld    (new RotateForward(m_Conveyor));
-    // new JoystickButton(m_XboxController, 7 )  .whenHeld    (new RotateReverse(m_Conveyor));
+    new JoystickButton(m_XboxController, 6)  .whenHeld    (new InstantCommand(()->m_Flywheel.flywheelspeedadjust(),m_Flywheel))
+                                             .whenReleased(new InstantCommand(()->m_Flywheel.flywheelstop(),m_Flywheel));
+    new JoystickButton(m_XboxController, 7)  .whenHeld    (new InstantCommand(()->m_Conveyor.conveyorForward()))
+                                             .whenReleased(new InstantCommand((()->m_Conveyor.conveyorStop())));
     new JoystickButton(m_XboxController, 8)  .whenHeld    (new InstantCommand(()->m_Preventor.preventorForward(), m_Preventor))
                                              .whenReleased(new InstantCommand(()->m_Preventor.preventorStop(), m_Preventor));
-
+    
     // new JoystickButton(m_Joystick, 10) .whenHeld(new InstantCommand();
 
   

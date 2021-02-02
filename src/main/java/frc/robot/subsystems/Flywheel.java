@@ -7,32 +7,33 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import frc.robot.Constants;
 
 public class Flywheel extends SubsystemBase  {
-  private SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = new SupplyCurrentLimitConfiguration(true, 50, 50, 1);
+  private SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = new SupplyCurrentLimitConfiguration(true, 40, 41, 1);
   private TalonFX flywheelLeft = new TalonFX(Constants.MotorPort.flywheelLeft);
   private TalonFX flywheelRight = new TalonFX(Constants.MotorPort.flywheelRight); 
-  
+
 
   public Flywheel() {
     // Factory default hardware to prevent unexpected behavior 
     flywheelLeft.configFactoryDefault();
     flywheelRight.configFactoryDefault();
     
+    SmartDashboard.putNumber("flywheel",flywheelLeft.getSelectedSensorVelocity());
     //set sensor
     flywheelLeft.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.Motor.kTimesOut);
     flywheelRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.Motor.kTimesOut);
-
+  
     //adjust kP,kF 
     flywheelLeft.config_kP(0, 0.1);
-    flywheelLeft.config_kF(0 , 0.506);
+    flywheelLeft.config_kF(0 , 0.05);
     flywheelRight.config_kP(0, 0.1);
-    flywheelRight.config_kF(0 , 0.506);
+    flywheelRight.config_kF(0 , 0.05);
 
     
     //adjust CruiseVel, Accler,SensorPos
-    flywheelLeft.configMotionCruiseVelocity(15000, Constants.Motor.kTimesOut);
+    flywheelLeft.configMotionCruiseVelocity(1000, Constants.Motor.kTimesOut);
 		flywheelLeft.configMotionAcceleration(6000, Constants.Motor.kTimesOut);
 		flywheelLeft.setSelectedSensorPosition(0, 0, Constants.Motor.kTimesOut);
-    flywheelRight.configMotionCruiseVelocity(15000, Constants.Motor.kTimesOut);
+    flywheelRight.configMotionCruiseVelocity(1000, Constants.Motor.kTimesOut);
 		flywheelRight.configMotionAcceleration(6000, Constants.Motor.kTimesOut);
 		flywheelRight.setSelectedSensorPosition(0, 0, Constants.Motor.kTimesOut);
 
@@ -48,25 +49,32 @@ public class Flywheel extends SubsystemBase  {
     flywheelRight.configNeutralDeadband(0.005, Constants.Motor.kTimesOut);
     
     //Closedloop,Openedloop
-    flywheelLeft.configClosedloopRamp(0.5, 10);
-    flywheelRight.configClosedloopRamp(0.5, 10);
+    flywheelLeft.configClosedloopRamp(1, 10);
+    flywheelRight.configClosedloopRamp(1, 10);
     
     //InvertType
-    flywheelRight.follow(flywheelLeft);
+
     flywheelLeft.setInverted(false);
-    flywheelRight.setInverted(InvertType.OpposeMaster);
+    flywheelRight.setInverted(true);
   }
 
-  public void flywheelforward() {
-    if(Limelight.getdistances()<=300){
-      flywheelRight.set(ControlMode.Velocity, 15000);
+  public void flywheelspeedadjust() {
+    if(Limelight.getdistances()<=200){
+      flywheelRight.set(ControlMode.Velocity, 11000);
+      flywheelLeft.set(ControlMode.Velocity, 11000);
     }else{
-      flywheelLeft.set(ControlMode.Velocity,20000);
+      flywheelLeft.set(ControlMode.Velocity,12000);
+      flywheelRight.set(ControlMode.Velocity, 12000);
     }
-    
-    SmartDashboard.putNumber("flywheel", flywheelLeft.getSelectedSensorVelocity());
   }
   public void flywheelstop() {
     flywheelLeft.set(ControlMode.PercentOutput,0);
+    flywheelRight.set(ControlMode.PercentOutput, 0);
+    SmartDashboard.putBoolean("hello", true);
+  }
+  @Override
+  public void periodic(){
+    SmartDashboard.putNumber("flyspeed", flywheelLeft.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("distance", Limelight.getdistances());
   }
 }

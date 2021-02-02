@@ -15,9 +15,9 @@ public class RotateForward extends CommandBase {
   /**
    * Creates a new RotateForward.
    */
-  private Conveyor motor;
+  private Flywheel motor;
 
-  public RotateForward(Conveyor motor ) {
+  public RotateForward(Flywheel motor ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.motor = motor;
     addRequirements(motor);
@@ -31,14 +31,14 @@ public class RotateForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    motor.conveyorForward();
-
+    motor.flywheelspeedadjust();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    motor.conveyorStop();
+    motor.flywheelstop();
   }
 
   // Returns true when the command should end.

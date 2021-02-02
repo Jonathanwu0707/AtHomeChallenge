@@ -28,16 +28,17 @@ public class Tower extends SubsystemBase {
         towerSrx.configNominalOutputForward(0,10);
         towerSrx.configNominalOutputReverse(0,10);
         towerSrx.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
+
        
     }
     public void aimming(){
         double horizenError = Limelight.getTx()*Constants.Motor.towerConst;
         double targetArea = Limelight.getarea();
         if(targetArea != 0){
-            if((Limelight.getTx()<1)&&(Limelight.getTx()>(-1))){
+            if((Limelight.getTx()<0.1)&&(Limelight.getTx()>(-0.1))){
                 towerSrx.set(ControlMode.PercentOutput, 0);
             }else{
-                towerSrx.set(ControlMode.PercentOutput, -horizenError);
+                towerSrx.set(ControlMode.PercentOutput, horizenError);
             }
         }
         else{

@@ -35,8 +35,8 @@ public class Conveyor extends SubsystemBase {
   }
 
   public void conveyorForward(){
-    wingSpx.set(ControlMode.PercentOutput, 0.6);
-    middleSpx.set(ControlMode.PercentOutput, 0.4);
+    wingSpx.set(ControlMode.PercentOutput, 0.8);
+    middleSpx.set(ControlMode.PercentOutput, 0.6);
   }
 
   public void conveyorStop(){
@@ -45,8 +45,8 @@ public class Conveyor extends SubsystemBase {
   }
 
   public void conveyorReverse(){
-    wingSpx.set(ControlMode.PercentOutput, -0.6);
-    middleSpx.set(ControlMode.PercentOutput, -0.4);
+    wingSpx.set(ControlMode.PercentOutput, -0.8);
+    middleSpx.set(ControlMode.PercentOutput, -0.6);
   }
   
 

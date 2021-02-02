@@ -18,6 +18,13 @@ double x = tx.getDouble(0.0);
 double y = ty.getDouble(0.0);
 double area = ta.getDouble(0.0);
 
+
+
+public static double getarea() {
+    double area = ta.getDouble(0.0);
+    return area;
+}
+
 public static double getTx() {
     double x = tx.getDouble(0.0);
     return x;
@@ -28,13 +35,8 @@ public static double getTy() {
     return y;
 }
 
-public static double getarea() {
-    double area = ta.getDouble(0.0);
-    return area;
-}
-
 public static double getdistances(){
-    double distance = (250-55)/Math.tan(Math.toRadians(54+Limelight.getTy()));
+    double distance = (250-55)/(Math.tan(Math.toRadians(54+Limelight.getTy())));
     return distance;
 }
 
