@@ -10,18 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.RotateForward;
-import frc.robot.commands.RotateReverse;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Preventor;
 import frc.robot.subsystems.Racker;
-import frc.robot.subsystems.Smartdash;
 import frc.robot.subsystems.Tower;
 
 /**
@@ -33,10 +28,7 @@ import frc.robot.subsystems.Tower;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Tower                 m_tower                     = new Tower();
-  private final Joystick              m_Joystick                  = new Joystick(0);
   private final XboxController        m_XboxController            = new XboxController(1);
-  private final Smartdash             m_Smartdash                 = new Smartdash();
-  private final Limelight             m_Limelight                 = new Limelight();
   private final Racker                m_Racker                    = new Racker();
   private final Flywheel              m_Flywheel                  = new Flywheel();
   private final Conveyor              m_Conveyor                  = new Conveyor();

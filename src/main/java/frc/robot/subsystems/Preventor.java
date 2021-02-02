@@ -8,14 +8,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Preventor extends SubsystemBase {
   
   private VictorSPX preventor = new VictorSPX(Constants.MotorPort.conveyorPreventer);
-  private PowerDistributionPanel PDP = new PowerDistributionPanel(0);
    
   /** Creates a new Preventor. */
   public Preventor() {
