@@ -77,6 +77,30 @@ public class RobotContainer {
 
   
   }
+  public void rackReset(){
+    int[] memory = new int[10];
+    int i = 0;
+    m_Racker.setPosition(100000);
+    while(true){
+      m_Racker.rackerReverse();
+      memory[i++] = m_Racker.getPosition();
+      if(i == 9){
+        i = 0;
+      }
+      int max = 0, min = 0;
+      for(int j = 0 ; j < 10; j++){
+        if(memory[j] > max){
+          max = memory[j];
+        }
+        if(memory[j] < min){
+          min = memory[j];
+        }
+      }
+      if(Math.abs(max - min) < 20){
+        break;
+      }
+    }
+  }
 
 
   /**

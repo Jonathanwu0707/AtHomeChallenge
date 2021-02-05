@@ -16,10 +16,12 @@ public class Racker extends SubsystemBase {
     private MedianFilter filter = new MedianFilter(5);
     
     public Racker(){
+        int position = rackerSrx.getSelectedSensorPosition();
         rackerSrx.configFactoryDefault();
         rackerSrx.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Absolute, 0, Constants.Motor.kTimesOut);
         rackerSrx.configMotionAcceleration(1000 ,Constants.Motor.kTimesOut);
         rackerSrx.configMotionCruiseVelocity(1000, Constants.Motor.kTimesOut);
+        rackerSrx.setSelectedSensorPosition(position);
 
         rackerSrx.configClosedLoopPeakOutput(0, 0.5); 
         rackerSrx.setNeutralMode(NeutralMode.Brake);  
@@ -32,21 +34,21 @@ public class Racker extends SubsystemBase {
         rackerSrx.config_kP(0, Constants.Motor.rackerKP);
         rackerSrx.config_kI(0, Constants.Motor.rackerKI);
         rackerSrx.config_IntegralZone(0, Constants.Motor.rackerIZone);
+        // rackerSrx.setSelectedSensorPosition(0);
 
        
-        rackerSrx.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector , LimitSwitchNormal.NormallyOpen);
+        // rackerSrx.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector , LimitSwitchNormal.NormallyOpen);
 
-        if(!rackerSrx.getSensorCollection().isFwdLimitSwitchClosed()){
-            rackerSrx.set(ControlMode.PercentOutput, -0.4);
-            if(rackerSrx.getSensorCollection().isFwdLimitSwitchClosed()){
-                rackerSrx.setSelectedSensorPosition(0, 0, 10); 
-                rackerSrx.overrideLimitSwitchesEnable(false);     
-            }
         } 
-    }
     
     public void rackerForward(){
         rackerSrx.set(ControlMode.PercentOutput, 0.4);
+    }
+    public int getPosition(){
+        return rackerSrx.getSelectedSensorPosition();
+    }
+    public void setPosition(int position){
+        rackerSrx.setSelectedSensorPosition(position);
     }
    
     public void rackerstop(){

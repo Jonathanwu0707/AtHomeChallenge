@@ -74,9 +74,9 @@ public class Tower extends SubsystemBase {
     }
     @Override
     public void periodic(){
-        if(digInput.get()){
-            towerSrx.setSelectedSensorPosition(0,0,10);
-        }  
+        // if(digInput.get()){
+        //     towerSrx.setSelectedSensorPosition(0,0,10);
+        // }  
         SmartDashboard.putNumber("towerpo", towerSrx.getSelectedSensorPosition(0));
     }
 } 
