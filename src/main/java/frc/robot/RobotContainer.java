@@ -53,7 +53,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    
     new JoystickButton(m_XboxController, 5)  .whenHeld    (new RunCommand(()->m_tower.aimming(),m_tower))
                                              .whenHeld    (new RunCommand(()->m_Racker.PortDistance(),m_Racker))
                                              .whenReleased(new InstantCommand(()->m_tower.towerStop(),m_tower))
@@ -68,7 +68,7 @@ public class RobotContainer {
                                              .whenReleased(new InstantCommand(()->m_Racker.rackerstop(), m_Racker));
     new JoystickButton(m_XboxController, 6)  .whenHeld    (new InstantCommand(()->m_Flywheel.flywheelspeedadjust(),m_Flywheel))
                                              .whenReleased(new InstantCommand(()->m_Flywheel.flywheelstop(),m_Flywheel));
-    new JoystickButton(m_XboxController, 7)  .whenHeld    (new InstantCommand(()->m_Conveyor.conveyorForward()))
+    new JoystickButton(m_XboxController, 9)  .whenHeld    (new InstantCommand(()->m_Conveyor.conveyorForward()))
                                              .whenReleased(new InstantCommand((()->m_Conveyor.conveyorStop())));
     new JoystickButton(m_XboxController, 8)  .whenHeld    (new InstantCommand(()->m_Preventor.preventorForward(), m_Preventor))
                                              .whenReleased(new InstantCommand(()->m_Preventor.preventorStop(), m_Preventor));

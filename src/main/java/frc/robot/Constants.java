@@ -30,13 +30,13 @@ public final class Constants {
     }
 
     public static class MotorPort{
-        public static final int tower = 32;
+        public static final int tower = 36;
         public static final int racker = 25;
         public static final int flywheelLeft = 17;
         public static final int flywheelRight = 15;
-        public static final int wing = 4;
-        public static final int middleWing = 5;
-        public static final int conveyorPreventer = 1;
+        public static final int wing = 1;
+        public static final int middleWing = 2;
+        public static final int conveyorPreventer = 3;
     
     public static class PDPport{
         public static final int wingPDP = 6;

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.*;
 
+import edu.wpi.first.wpilibj.MedianFilter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -12,10 +13,11 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 public class Racker extends SubsystemBase {
     private SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = new SupplyCurrentLimitConfiguration(true, 30, 30, 1);
     public TalonSRX rackerSrx = new TalonSRX(Constants.MotorPort.racker);
-    // public LimitSwitchSource limitswitch
+    private MedianFilter filter = new MedianFilter(5);
+    
     public Racker(){
         rackerSrx.configFactoryDefault();
-        rackerSrx.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.Motor.kTimesOut);
+        rackerSrx.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Absolute, 0, Constants.Motor.kTimesOut);
         rackerSrx.configMotionAcceleration(1000 ,Constants.Motor.kTimesOut);
         rackerSrx.configMotionCruiseVelocity(1000, Constants.Motor.kTimesOut);
 
@@ -32,22 +34,17 @@ public class Racker extends SubsystemBase {
         rackerSrx.config_IntegralZone(0, Constants.Motor.rackerIZone);
 
        
-        rackerSrx.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX , LimitSwitchNormal.NormallyOpen);
-        
+        rackerSrx.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector , LimitSwitchNormal.NormallyOpen);
+
         if(!rackerSrx.getSensorCollection().isFwdLimitSwitchClosed()){
-             rackerSrx.set(ControlMode.PercentOutput, -0.4);
-             rackerSrx.setSelectedSensorPosition(0, 0, 10); 
-             rackerSrx.configForwardSoftLimitEnable(false);
-
-        }
+            rackerSrx.set(ControlMode.PercentOutput, -0.4);
+            if(rackerSrx.getSensorCollection().isFwdLimitSwitchClosed()){
+                rackerSrx.setSelectedSensorPosition(0, 0, 10); 
+                rackerSrx.overrideLimitSwitchesEnable(false);     
+            }
+        } 
     }
-   
-
-    // public void CertainDistance(){
-    //     int targetDistance = 5000;
-    //     rackerSrx.set(ControlMode.Position, (targetDistance-rackerSrx.getSelectedSensorPosition()));
-    // }
-
+    
     public void rackerForward(){
         rackerSrx.set(ControlMode.PercentOutput, 0.4);
     }
@@ -62,6 +59,7 @@ public class Racker extends SubsystemBase {
 
     public void PortDistance(){
         double distance = Limelight.getdistances();
+        filter.calculate(distance);
         
         if(distance<=250){
             rackerSrx.set(ControlMode.Position, 11500);
@@ -88,6 +86,11 @@ public class Racker extends SubsystemBase {
 
   @Override
     public void periodic(){
+        if(rackerSrx.getSensorCollection().isFwdLimitSwitchClosed()){
+            SmartDashboard.putBoolean("limitswitch", true);
+        }else{
+            SmartDashboard.putBoolean("limitswitch", false);
+        }
         SmartDashboard.putNumber("rackPoistion", rackerSrx.getSelectedSensorPosition());
     }
 } 
